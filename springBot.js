@@ -25,7 +25,7 @@ canvas.addEventListener('click', function (event)
 }, false);
 var iid;
 var xpos = [0, 0, 0], xvel = [0, 0, 0], ypos = [0, 0, 0], yvel = [0, 0, 0];
-var g = 60, dt = .05, m= [1,1,1];
+var g = 60, dt = .03, m= [1,1,1];
 var k = [30, 30, 30], eq = [100, 100, 100]
 var floorY = 40;
 var mu = .70;
