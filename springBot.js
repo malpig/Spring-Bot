@@ -4,8 +4,14 @@ const context = canvas.getContext("2d");
 context.fillStyle = `rgb(0,0,0)`;
 context.fillRect(0, 0, canvas.width, canvas.height);
 var cLeft = canvas.offsetLeft + canvas.clientLeft, cTop = canvas.offsetTop + canvas.clientTop;
-var startTime=0, currentTime=0, seconds=0;
-// Add event listener for `click` events.
+var startTime = 0, currentTime = 0, seconds = 0;
+var iid;
+var xpos = [0, 0, 0], xvel = [0, 0, 0], ypos = [0, 0, 0], yvel = [0, 0, 0];
+var g = 60, dt = .03, m = [1, 1, 1];
+var k = [30, 30, 30], eq = [100, 100, 100]
+var floorY = 40;
+var mu = .70;
+
 canvas.addEventListener('click', function (event)
 {
     var x = event.pageX - cLeft, y = event.pageY - cTop;
@@ -14,7 +20,7 @@ canvas.addEventListener('click', function (event)
     {
         if (x <= 520 && x >= 20)
         {
-            if (y <= 530 + 100 * i && y >= 500 + 100 * i)
+            if (y <= 680 + 50 * i && y >= 650 + 50 * i)
             {
                 eq[i] = x - 20;
                 drawRec();
@@ -23,14 +29,6 @@ canvas.addEventListener('click', function (event)
             
     }
 }, false);
-var iid;
-var xpos = [0, 0, 0], xvel = [0, 0, 0], ypos = [0, 0, 0], yvel = [0, 0, 0];
-var g = 60, dt = .03, m= [1,1,1];
-var k = [30, 30, 30], eq = [100, 100, 100]
-var floorY = 40;
-var mu = .70;
-
-
 function setColor(cn)
 {
     var col = [0, 0, 0];
@@ -42,26 +40,26 @@ function drawRec()
 {
     var i;
     context.fillStyle = `rgb(0,0,0)`;
-    context.fillRect(0,400,canvas.width,400)
+    context.fillRect(0,600,canvas.width,200)
     for (i = 0; i < 3; i++)
     {
         setColor(i);
         context.beginPath();
-        context.moveTo(20, 500 + 100 * i);
-        context.lineTo(520, 500 + 100 * i);
-        context.lineTo(520, 530 + 100 * i);
-        context.lineTo(20, 530 + 100 * i);
-        context.lineTo(20, 500 + 100 * i);
+        context.moveTo(20, 650 + 50 * i);
+        context.lineTo(520, 650 + 50 * i);
+        context.lineTo(520, 680 + 50 * i);
+        context.lineTo(20, 680 + 50 * i);
+        context.lineTo(20, 650 + 50 * i);
         context.stroke();
-        context.fillRect(20, 500 + 100 * i, eq[i], 30)
+        context.fillRect(20, 650 + 50 * i, eq[i], 30)
     }
 }
 function drawcircle(x,y,r)
 {
-    if (y > 400)
-        y = 395;
+    if (y > 600)
+        y = 595;
     context.beginPath();
-    context.arc(x, 400-y, r, 0, 2 * Math.PI, true);
+    context.arc(x, 600 - y, r, 0, 2 * Math.PI, true);
     context.fill();
  }
 function evolution()
@@ -124,11 +122,11 @@ function evolution()
         yvel[i] *= 0.99;
     }
     context.fillStyle = `rgb(0,0,0)`;
-    context.fillRect(0, 0, canvas.width, 400);
+    context.fillRect(0, 0, canvas.width, 600);
     context.strokeStyle = `rgb(100,150,100)`;
     context.beginPath();
-    context.moveTo( 0, 400-floorY);
-    context.lineTo(1200, 400 - floorY);
+    context.moveTo(0, 600 - floorY);
+    context.lineTo(1200, 600 - floorY);
     context.stroke();
     context.fillStyle = `rgb(100,0,100)`;
     for (i = 0; i < 3; i++)
@@ -147,8 +145,8 @@ function evolution()
         }
         setColor(i);
         context.beginPath();
-        context.moveTo(xpos[a], 400 - ypos[a]);
-        context.lineTo(xpos[b], 400 - ypos[b]);
+        context.moveTo(xpos[a], 600 - ypos[a]);
+        context.lineTo(xpos[b], 600 - ypos[b]);
         context.stroke();
     }
     if (false)
@@ -167,8 +165,8 @@ function evolution()
 function go()
 {
     eq = [100, 100, 100];
-    ypos = [floorY + 10, floorY + 10 + eq[0] * .866, floorY + 10];
-    xpos = [60, 60 + eq[0] / 2, 60 + eq[0]];
+    ypos = [39.09999649615201, 124.13535835606537, 39.09999649615203];
+    xpos = [59.62263943356491, 110.00000000000003, 160.37736056643516];
     yvel = [0, 0, 0];
     xvel = [0, 0, 0];
     eq = [100, 100, 100];
